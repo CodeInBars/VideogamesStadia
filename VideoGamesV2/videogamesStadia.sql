@@ -1,3 +1,4 @@
+Drop database if exists videogames;
 Create database videogames;
 use videogames;
 create table games(
@@ -19,7 +20,9 @@ create table prestamos(
 
 	dni varchar(10),
     codigo int,
+    fechaPrestamo Date,
     fechaDevolucion Date,
+    PRIMARY KEY (codigo,dni,fechaPrestamo),
     Foreign key(codigo) References games(codigo),
     Foreign key(dni) References socios(dni) on delete cascade
 );
