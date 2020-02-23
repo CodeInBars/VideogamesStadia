@@ -1,7 +1,5 @@
 package com.codelupo.views;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -9,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,13 +20,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import com.codelupo.controller.ActionListeners;
 import com.codelupo.videogames.model.Socios;
 
 public class PartnerFrame extends JPanel {
 
 	private DefaultTableModel partnersModel;
-
-	public PartnerFrame() {
+	public JTextField dniField,nameField,surnameField,countField;
+	private JLabel title,labelDni,labelNombre,labelSurname,labelCount;
+	public PartnerFrame(ActionListeners action) {
 		super();
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.weightx = 1000;
@@ -37,7 +38,7 @@ public class PartnerFrame extends JPanel {
 		this.setBackground(Color.GRAY);
 		this.setBounds(10, 10, 200, 200);
 		// Label title
-		JLabel title = new JLabel();
+		title = new JLabel();
 		title.setText(" Socios ");
 		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		title.setForeground(Color.BLUE);
@@ -49,53 +50,53 @@ public class PartnerFrame extends JPanel {
 		constraints.gridheight = 1;
 		this.add(title, constraints);
 		// JLabels
-		JLabel labelDni = new JLabel("DNI");
+		labelDni = new JLabel("DNI");
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(labelDni, constraints);
-		JLabel labelNombre = new JLabel("Nombre");
+		labelNombre = new JLabel("Nombre");
 		constraints.gridx = 2;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(labelNombre, constraints);
-		JLabel labelSurname = new JLabel("Apellidos");
+		labelSurname = new JLabel("Apellidos");
 		constraints.gridx = 4;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(labelSurname, constraints);
-		JLabel labelCount = new JLabel("Cuenta del banco");
+		labelCount = new JLabel("Cuenta del banco");
 		constraints.gridx = 6;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(labelCount, constraints);
 		// JTextFields
-		JTextField dniField = new JTextField();
+		dniField = new JTextField();
 		dniField.setColumns(10);
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(dniField, constraints);
-		JTextField nameField = new JTextField();
+		nameField = new JTextField();
 		nameField.setColumns(10);
 		constraints.gridx = 3;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(nameField, constraints);
-		JTextField surnameField = new JTextField();
+		surnameField = new JTextField();
 		surnameField.setColumns(10);
 		constraints.gridx = 5;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(surnameField, constraints);
-		JTextField countField = new JTextField();
+		countField = new JTextField();
 		countField.setColumns(13);
 		constraints.gridx = 7;
 		constraints.gridy = 1;
@@ -134,11 +135,54 @@ public class PartnerFrame extends JPanel {
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		constraints.gridwidth = 4;
-		constraints.gridheight = 1;
+		constraints.gridheight = 4;
 		this.add(table, constraints);
 		
 		// Buttons
+		JButton backToMenu = new JButton("Menú");
+		backToMenu.setActionCommand("backtomenu");
+		backToMenu.addActionListener(action);
+		constraints.gridx = 8;
+		constraints.gridy = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		this.add(backToMenu, constraints);
 		
+		JButton cleanButton = new JButton("Limpiar campos");
+		cleanButton.setActionCommand("clean");
+		cleanButton.addActionListener(action);
+		constraints.gridx = 8;
+		constraints.gridy = 1;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		this.add(cleanButton, constraints);
+		
+		JButton addPartner = new JButton("Añadir Socio");
+		addPartner.setActionCommand("addPartner");
+		addPartner.addActionListener(action);
+		constraints.gridx = 5;
+		constraints.gridy = 3;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		this.add(addPartner, constraints);
+		
+		JButton deletePartner = new JButton("Borrar Socio");
+		deletePartner.setActionCommand("deletePartner");
+		deletePartner.addActionListener(action);
+		constraints.gridx = 5;
+		constraints.gridy = 4;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		this.add(deletePartner, constraints);
+		
+		JButton editPartner = new JButton("Editar Socio");
+		editPartner.setActionCommand("editPartner");
+		editPartner.addActionListener(action);
+		constraints.gridx = 5;
+		constraints.gridy = 5;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		this.add(editPartner, constraints);
 		
 	}
 

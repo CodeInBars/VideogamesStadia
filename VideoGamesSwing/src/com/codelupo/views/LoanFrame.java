@@ -1,13 +1,16 @@
 package com.codelupo.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,15 +24,22 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.codelupo.controller.ActionListeners;
+import com.codelupo.videogames.controller.Controller;
+import com.codelupo.videogames.model.Prestamos;
+import com.codelupo.videogames.model.Socios;
 import com.codelupo.videogames.model.VideoGames;
 
-public class GamesFrame extends JPanel {
-
+public class LoanFrame extends JPanel {
 	private DefaultTableModel gamesModel;
-	public JTextField codeField, nameField, sinopsisField;
-	private JLabel title, labelCode, labelNombre, labelSinopsis;
+	private DefaultComboBoxModel<Socios> partnersModel;
+	private DefaultComboBoxModel<VideoGames> gamesModelBox;
+	public JComboBox<Socios> partnersBox;
+	public JComboBox<VideoGames> gamesBox;
+	public JTextField giveItBackField;
+	private JLabel title, labelPartner, labelGame, labelGiveItBack;
+	public JTable gamesTable;
 
-	public GamesFrame(ActionListeners action) {
+	public LoanFrame(ActionListeners action, Controller videoclub) {
 		super();
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.weightx = 1000;
@@ -40,7 +50,7 @@ public class GamesFrame extends JPanel {
 		this.setBounds(10, 10, 200, 200);
 		// Label title
 		title = new JLabel();
-		title.setText(" Juegos ");
+		title.setText(" Préstamos ");
 		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		title.setForeground(Color.BLUE);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -51,50 +61,67 @@ public class GamesFrame extends JPanel {
 		constraints.gridheight = 1;
 		this.add(title, constraints);
 		// JLabels
-		labelCode = new JLabel("Código");
+		labelPartner = new JLabel("Socio");
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		this.add(labelCode, constraints);
-		labelNombre = new JLabel("Nombre");
+		this.add(labelPartner, constraints);
+		labelGame = new JLabel("Juego");
 		constraints.gridx = 2;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		this.add(labelNombre, constraints);
-		
-		labelSinopsis = new JLabel("Sinopsis");
+		this.add(labelGame, constraints);
+
+		labelGiveItBack = new JLabel("Devolución");
 		constraints.gridx = 4;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		this.add(labelSinopsis, constraints);
+		this.add(labelGiveItBack, constraints);
 		// JTextFields
-		codeField = new JTextField();
-		codeField.setColumns(10);
+		List<Socios> socios = videoclub.getAllPartners();
+		Socios[] modelCombo = new Socios[socios.size()];
+		for(int i = 0; i < socios.size(); i++) {
+			modelCombo[i] = socios.get(i);
+		}
+		partnersModel = new DefaultComboBoxModel<Socios>(modelCombo);
+		partnersBox = new JComboBox(partnersModel);
+		partnersBox.setSelectedIndex(0);
+		partnersBox.setActionCommand("changePartner");
+		partnersBox.addActionListener(action);
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		this.add(codeField, constraints);
-		nameField = new JTextField();
-		nameField.setColumns(10);
+		this.add(partnersBox, constraints);
+
+		List<VideoGames> juegos = videoclub.getAllGames();
+		VideoGames[] modelComboGames = new VideoGames[juegos.size()];
+		for(int i = 0; i < juegos.size(); i++) {
+			modelComboGames[i] = juegos.get(i);
+		}
+		gamesModelBox = new DefaultComboBoxModel<VideoGames>(modelComboGames);
+		gamesBox = new JComboBox(gamesModelBox);
+		gamesBox.setSelectedIndex(0);
+		gamesBox.setActionCommand("changeGame");
+		gamesBox.addActionListener(action);
 		constraints.gridx = 3;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		this.add(nameField, constraints);
-		
-		sinopsisField = new JTextField();
-		sinopsisField.setColumns(13);
+		this.add(gamesBox, constraints);
+
+		giveItBackField = new JTextField();
+		giveItBackField.setColumns(13);
 		constraints.gridx = 5;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		this.add(sinopsisField, constraints);
+		this.add(giveItBackField, constraints);
 		// Table
-		String[] columns = { "Código", "Nombre", "Sinopsis" };
+		String[] columns = { "Código", "Nombre", "Préstamo", "Devolución" };
 		// CEldas no editables
 		gamesModel = new DefaultTableModel(columns, 0) {
 			public boolean isCellEditable(int row, int column) {
@@ -102,7 +129,7 @@ public class GamesFrame extends JPanel {
 			}
 
 		};
-		JTable gamesTable = new JTable(gamesModel);
+		gamesTable = new JTable(gamesModel);
 		gamesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		gamesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -110,11 +137,16 @@ public class GamesFrame extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				if (!gamesTable.getSelectionModel().isSelectionEmpty()) {
-					codeField.setText(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 0).toString());
-					nameField
-							.setText(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 1).toString());
-					sinopsisField
-							.setText(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 2).toString());
+					partnersBox.setSelectedItem(videoclub.selectPartnerByCode(new Socios(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 0).toString(),null,null,null)));
+					gamesBox.setSelectedItem(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 1).toString());
+
+					try {
+						giveItBackField.setText(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 3).toString());
+					} catch (NullPointerException ex) {
+						// TODO: handle exception
+						giveItBackField.setText("");
+					}
+
 				}
 			}
 		});
@@ -122,59 +154,43 @@ public class GamesFrame extends JPanel {
 		JScrollPane table = new JScrollPane(gamesTable);
 		constraints.gridx = 0;
 		constraints.gridy = 2;
-		constraints.gridwidth = 4;
-		constraints.gridheight = 4;
+		constraints.gridwidth = 3;
+		constraints.gridheight = 3;
 		this.add(table, constraints);
 
 		// Buttons
 		JButton backToMenu = new JButton("Menú");
 		backToMenu.setActionCommand("backtomenu");
 		backToMenu.addActionListener(action);
-		constraints.gridx = 6;
+		constraints.gridx = 5;
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(backToMenu, constraints);
 
-		JButton cleanButton = new JButton("Limpiar campos");
-		cleanButton.setActionCommand("clean");
-		cleanButton.addActionListener(action);
-		constraints.gridx = 6;
-		constraints.gridy = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		this.add(cleanButton, constraints);
-
-		JButton addGame = new JButton("Añadir Juego");
-		addGame.setActionCommand("addGame");
-		addGame.addActionListener(action);
-		constraints.gridx = 5;
+		JButton addLoan = new JButton("Hacer préstamo");
+		addLoan.setActionCommand("addLoan");
+		addLoan.addActionListener(action);
+		addLoan.setPreferredSize(new Dimension(200,100));
+		constraints.gridx = 4;
 		constraints.gridy = 3;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		this.add(addGame, constraints);
+		this.add(addLoan, constraints);
 
-		JButton deleteGame = new JButton("Borrar Juego");
-		deleteGame.setActionCommand("deleteGame");
-		deleteGame.addActionListener(action);
-		constraints.gridx = 5;
+		JButton giveBackLoan = new JButton("Devolver Juego");
+		giveBackLoan.setActionCommand("giveBackGame");
+		giveBackLoan.addActionListener(action);
+		giveBackLoan.setPreferredSize(new Dimension(200,100));
+		constraints.gridx = 4;
 		constraints.gridy = 4;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		this.add(deleteGame, constraints);
-
-		JButton editGame = new JButton("Editar Juego");
-		editGame.setActionCommand("editGame");
-		editGame.addActionListener(action);
-		constraints.gridx = 5;
-		constraints.gridy = 5;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		this.add(editGame, constraints);
+		this.add(giveBackLoan, constraints);
 
 	}
 
-	public void fillTable(List<VideoGames> gamesList) {
+	public void fillTable(List<Prestamos> loanList) {
 		// Borramos los datos de la tabla libros
 		int filas = gamesModel.getRowCount();
 		if (filas > 0) {
@@ -185,9 +201,10 @@ public class GamesFrame extends JPanel {
 		// modelo.fireTableDataChanged();
 		// Rellenamos de nuevo la tabla libros
 
-		for (int i = 0; i < gamesList.size(); i++) {
-			VideoGames game = gamesList.get(i);
-			Object[] fila = { game.getCode(), game.getName(), game.getSinopsis() };
+		for (int i = 0; i < loanList.size(); i++) {
+			Prestamos loan = loanList.get(i);
+			Object[] fila = { loan.getSocios().getDni(), loan.getGames().getName(), loan.getFechaPrestamo(),
+					loan.getFechaDevolucion() };
 			gamesModel.addRow(fila);
 		}
 

@@ -171,7 +171,7 @@ public class Controller {
 		boolean res = false;
 
 		try {
-			PreparedStatement sentencia = conexion.prepareStatement("delete from games where code = ?");
+			PreparedStatement sentencia = conexion.prepareStatement("delete from games where codigo = ?");
 
 			sentencia.setInt(1, game.getCode());
 
@@ -322,7 +322,7 @@ public class Controller {
 		boolean res = false;
 
 		try {
-			PreparedStatement sentencia = conexion.prepareStatement("update socios set nombre = ?, apellidos = ?, tarjetaBancaria where dni = ?");
+			PreparedStatement sentencia = conexion.prepareStatement("update socios set nombre = ?, apellidos = ?, tarjetaBancaria = ? where dni = ?");
 
 			sentencia.setString(1, partner.getName());
 			sentencia.setString(2, partner.getSurname());

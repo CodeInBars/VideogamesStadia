@@ -3,18 +3,21 @@ package com.codelupo.views;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.HeadlessException;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.codelupo.controller.ActionListeners;
+import com.codelupo.videogames.controller.Controller;
 
 public class MainFrame extends JFrame {
 	
 	private MenuFrame menu;
 	private PartnerFrame partners;
 	private GamesFrame games;
+	private LoanFrame loans;
 	
-	public MainFrame(ActionListeners action) throws HeadlessException {
+	public MainFrame(ActionListeners action, Controller videoclub) throws HeadlessException {
 		super();
 		
 		this.setTitle("Video Club Lupo Xan");
@@ -22,19 +25,23 @@ public class MainFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500,500);
 		this.setResizable(false);
-		JPanel contenedor = new JPanel();
-		contenedor.setLayout(new CardLayout(10, 10));
-		contenedor.setBackground(Color.DARK_GRAY);
-		this.setContentPane(contenedor);
+		JPanel container = new JPanel();
+		container.setLayout(new CardLayout(10, 10));
+		container.setBackground(Color.DARK_GRAY);
+		this.setContentPane(container);
 		
 		menu = new MenuFrame(action);
-		contenedor.add(menu);
+		container.add(menu);
 		
-		partners = new PartnerFrame();
-		contenedor.add(partners);
+		partners = new PartnerFrame(action);
+		container.add(partners);
 		
-		games = new GamesFrame();
-		contenedor.add(games);
+		games = new GamesFrame(action);
+		container.add(games);
+		
+		loans = new LoanFrame(action,videoclub);
+		container.add(loans);
+		
 	}
 
 	public MenuFrame getMenu() {
@@ -59,6 +66,14 @@ public class MainFrame extends JFrame {
 
 	public void setGames(GamesFrame games) {
 		this.games = games;
+	}
+
+	public LoanFrame getLoans() {
+		return loans;
+	}
+
+	public void setLoans(LoanFrame loans) {
+		this.loans = loans;
 	}
 
 }

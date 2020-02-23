@@ -14,9 +14,11 @@ public class Main {
 		if(videoClub.getConexion() != null) {
 			actionlisteners = new ActionListeners(videoClub);
 			
-			mainFrame = new MainFrame(actionlisteners);
+			mainFrame = new MainFrame(actionlisteners, videoClub);
+			mainFrame.setUndecorated(true);
 			actionlisteners.setMainframe(mainFrame);
 			mainFrame.setVisible(true);
+			
 			
 		}
 	}

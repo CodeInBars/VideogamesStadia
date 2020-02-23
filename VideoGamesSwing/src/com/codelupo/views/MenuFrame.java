@@ -21,8 +21,8 @@ public class MenuFrame extends JPanel {
 		super();
 
 		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.weightx = 3;
-		constraints.weighty = 2;
+		constraints.weightx = 2;
+		constraints.weighty = 4;
 
 		this.setLayout(new GridBagLayout());
 		this.setBackground(Color.GRAY);
@@ -34,7 +34,7 @@ public class MenuFrame extends JPanel {
 		title.setForeground(Color.BLUE);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		constraints.gridx = 1;
+		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 3;
 		constraints.gridheight = 1;
@@ -46,7 +46,7 @@ public class MenuFrame extends JPanel {
 		partner.setIcon(new ImageIcon("src/com/codelupo/images/socios.png"));
 		constraints.gridx = 1;
 		constraints.gridy = 1;
-		constraints.gridwidth = 1;
+		constraints.gridwidth = 4;
 		constraints.gridheight = 1;
 		this.add(partner, constraints);
 		// Games button
@@ -56,7 +56,7 @@ public class MenuFrame extends JPanel {
 		games.setIcon(new ImageIcon("src/com/codelupo/images/games.png"));
 		constraints.gridx = 1;
 		constraints.gridy = 2;
-		constraints.gridwidth = 1;
+		constraints.gridwidth = 4;
 		constraints.gridheight = 1;
 		this.add(games, constraints);
 		// Loans button
@@ -66,9 +66,18 @@ public class MenuFrame extends JPanel {
 		loans.setIcon(new ImageIcon("src/com/codelupo/images/loan.png"));
 		constraints.gridx = 1;
 		constraints.gridy = 3;
-		constraints.gridwidth = 1;
+		constraints.gridwidth = 4;
 		constraints.gridheight = 1;
 		this.add(loans, constraints);
+		//Exit button
+		JButton exit = new JButton("Salir");
+		exit.setActionCommand("exit");
+		exit.addActionListener(actions);
+		constraints.gridx = 3;
+		constraints.gridy = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		this.add(exit,constraints);
 
 	}
 
