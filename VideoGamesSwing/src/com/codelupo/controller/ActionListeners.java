@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JOptionPane;
 
 import com.codelupo.videogames.controller.Controller;
@@ -17,6 +19,8 @@ public class ActionListeners implements ActionListener {
 
 	Controller videoclub;
 	MainFrame mainframe;
+	Socios socio;
+	VideoGames game;
 
 	public ActionListeners() {
 		super();
@@ -121,29 +125,34 @@ public class ActionListeners implements ActionListener {
 			break;
 		case "addLoan":
 			try {
-				if (!videoclub.addLoan(new Prestamos((Socios)mainframe.getLoans().partnersBox.getSelectedItem(),(VideoGames)mainframe.getLoans().gamesBox.getSelectedItem(),new SimpleDateFormat("yyyy-MM-dd").parse(mainframe.getLoans().gamesTable.getModel().getValueAt(mainframe.getLoans().gamesTable.getSelectedRow(), 2).toString()), new SimpleDateFormat("yyyy-MM-dd").parse(mainframe.getLoans().giveItBackField.getText())))){
+				if (!videoclub.addLoan(new Prestamos((Socios) mainframe.getLoans().partnersBox.getSelectedItem(),(VideoGames) mainframe.getLoans().gamesBox.getSelectedItem(),new Date(), null))){
 					JOptionPane.showMessageDialog(null, "Error al prestar el juego");
 				} else {
 					clean();
-					System.out.println("Todo ok");
 					mainframe.getLoans().fillTable(videoclub.getAllLoans());
 				}
 			} catch (HeadlessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			}
+			break;
+		case "giveBackGame":
+			try {
+				if(!videoclub.updateLoan(new Prestamos(socio,game,new SimpleDateFormat("yyyy-MM-dd").parse(mainframe.getLoans().gamesTable.getModel().getValueAt(mainframe.getLoans().gamesTable.getSelectedRow(), 2).toString()),new Date()))) {
+					JOptionPane.showMessageDialog(null, "Error al devolver el juego");
+				} else {
+					mainframe.getLoans().fillTable(videoclub.getAllLoans());
+				}
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			break;
-		case "giveBackGame":
-			
-			break;
 		case "changePartner":
-			mainframe.getLoans().partnersBox.setSelectedIndex(1);
+			socio = (Socios) mainframe.getLoans().partnersBox.getSelectedItem();
 			break;
 		case "changeGame":
-			
+			game = (VideoGames) mainframe.getLoans().gamesBox.getSelectedItem();
 			break;
 		case "backtomenu":
 			mainframe.getPartners().setVisible(false);
@@ -170,8 +179,6 @@ public class ActionListeners implements ActionListener {
 		mainframe.getGames().codeField.setText("");
 		mainframe.getGames().nameField.setText("");
 		mainframe.getGames().sinopsisField.setText("");
-		
-		mainframe.getLoans().giveItBackField.setText("");
 	}
 
 }

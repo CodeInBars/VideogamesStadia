@@ -28,6 +28,7 @@ public class PartnerFrame extends JPanel {
 	private DefaultTableModel partnersModel;
 	public JTextField dniField,nameField,surnameField,countField;
 	private JLabel title,labelDni,labelNombre,labelSurname,labelCount;
+	
 	public PartnerFrame(ActionListeners action) {
 		super();
 		GridBagConstraints constraints = new GridBagConstraints();

@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
@@ -33,10 +32,11 @@ public class LoanFrame extends JPanel {
 	private DefaultTableModel gamesModel;
 	private DefaultComboBoxModel<Socios> partnersModel;
 	private DefaultComboBoxModel<VideoGames> gamesModelBox;
+
 	public JComboBox<Socios> partnersBox;
 	public JComboBox<VideoGames> gamesBox;
-	public JTextField giveItBackField;
-	private JLabel title, labelPartner, labelGame, labelGiveItBack;
+	
+	private JLabel title, labelPartner, labelGame;
 	public JTable gamesTable;
 
 	public LoanFrame(ActionListeners action, Controller videoclub) {
@@ -57,7 +57,7 @@ public class LoanFrame extends JPanel {
 		title.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.gridwidth = 8;
+		constraints.gridwidth = 4;
 		constraints.gridheight = 1;
 		this.add(title, constraints);
 		// JLabels
@@ -74,21 +74,14 @@ public class LoanFrame extends JPanel {
 		constraints.gridheight = 1;
 		this.add(labelGame, constraints);
 
-		labelGiveItBack = new JLabel("Devolución");
-		constraints.gridx = 4;
-		constraints.gridy = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		this.add(labelGiveItBack, constraints);
 		// JTextFields
 		List<Socios> socios = videoclub.getAllPartners();
 		Socios[] modelCombo = new Socios[socios.size()];
-		for(int i = 0; i < socios.size(); i++) {
+		for (int i = 0; i < socios.size(); i++) {
 			modelCombo[i] = socios.get(i);
 		}
 		partnersModel = new DefaultComboBoxModel<Socios>(modelCombo);
 		partnersBox = new JComboBox(partnersModel);
-		partnersBox.setSelectedIndex(0);
 		partnersBox.setActionCommand("changePartner");
 		partnersBox.addActionListener(action);
 		constraints.gridx = 1;
@@ -99,12 +92,11 @@ public class LoanFrame extends JPanel {
 
 		List<VideoGames> juegos = videoclub.getAllGames();
 		VideoGames[] modelComboGames = new VideoGames[juegos.size()];
-		for(int i = 0; i < juegos.size(); i++) {
+		for (int i = 0; i < juegos.size(); i++) {
 			modelComboGames[i] = juegos.get(i);
 		}
 		gamesModelBox = new DefaultComboBoxModel<VideoGames>(modelComboGames);
 		gamesBox = new JComboBox(gamesModelBox);
-		gamesBox.setSelectedIndex(1);
 		gamesBox.setActionCommand("changeGame");
 		gamesBox.addActionListener(action);
 		constraints.gridx = 3;
@@ -112,14 +104,7 @@ public class LoanFrame extends JPanel {
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(gamesBox, constraints);
-
-		giveItBackField = new JTextField();
-		giveItBackField.setColumns(13);
-		constraints.gridx = 5;
-		constraints.gridy = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		this.add(giveItBackField, constraints);
+		
 		// Table
 		String[] columns = { "Código", "Nombre", "Préstamo", "Devolución" };
 		// CEldas no editables
@@ -137,17 +122,22 @@ public class LoanFrame extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				if (!gamesTable.getSelectionModel().isSelectionEmpty()) {
-					
-					partnersBox.setSelectedItem(videoclub.selectPartnerByCode(new Socios(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 0).toString(),null,null,null)));
 
-					gamesBox.setSelectedItem(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 1).toString());
+					for (int i = 0; i < partnersModel.getSize(); i++) {
 
-					try {
-						giveItBackField.setText(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 3).toString());
-					} catch (NullPointerException ex) {
-						giveItBackField.setText("");
+						if (gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 0)
+								.equals(partnersModel.getElementAt(i).getDni())) {
+							partnersBox.setSelectedIndex(i);
+						}
 					}
 
+					for (int i = 0; i < gamesModelBox.getSize(); i++) {
+
+						if (gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 1)
+								.equals(gamesModelBox.getElementAt(i).getName())) {
+							gamesBox.setSelectedIndex(i);
+						}
+					}
 				}
 			}
 		});
@@ -163,7 +153,7 @@ public class LoanFrame extends JPanel {
 		JButton backToMenu = new JButton("Menú");
 		backToMenu.setActionCommand("backtomenu");
 		backToMenu.addActionListener(action);
-		constraints.gridx = 5;
+		constraints.gridx = 4;
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
@@ -172,8 +162,8 @@ public class LoanFrame extends JPanel {
 		JButton addLoan = new JButton("Hacer préstamo");
 		addLoan.setActionCommand("addLoan");
 		addLoan.addActionListener(action);
-		addLoan.setPreferredSize(new Dimension(200,100));
-		constraints.gridx = 4;
+		addLoan.setPreferredSize(new Dimension(200, 100));
+		constraints.gridx = 3;
 		constraints.gridy = 3;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
@@ -182,8 +172,8 @@ public class LoanFrame extends JPanel {
 		JButton giveBackLoan = new JButton("Devolver Juego");
 		giveBackLoan.setActionCommand("giveBackGame");
 		giveBackLoan.addActionListener(action);
-		giveBackLoan.setPreferredSize(new Dimension(200,100));
-		constraints.gridx = 4;
+		giveBackLoan.setPreferredSize(new Dimension(200, 100));
+		constraints.gridx = 3;
 		constraints.gridy = 4;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
