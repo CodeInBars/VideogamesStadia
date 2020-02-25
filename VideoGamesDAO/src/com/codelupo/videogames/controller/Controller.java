@@ -24,8 +24,8 @@ import com.codelupo.videogames.model.VideoGames;
 public class Controller {
 	Connection conexion = null;
 
-	private String url = "jdbc:mysql://localhost:5432/videogames";
-	//private String url = "jdbc:mysql://localhost:3306/videogames";
+	//private String url = "jdbc:mysql://localhost:5432/videogames";
+	private String url = "jdbc:mysql://localhost:3306/videogames";
 
 	private String usuario = "root";
 	private String clave = "root";

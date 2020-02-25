@@ -104,7 +104,7 @@ public class LoanFrame extends JPanel {
 		}
 		gamesModelBox = new DefaultComboBoxModel<VideoGames>(modelComboGames);
 		gamesBox = new JComboBox(gamesModelBox);
-		gamesBox.setSelectedIndex(0);
+		gamesBox.setSelectedIndex(1);
 		gamesBox.setActionCommand("changeGame");
 		gamesBox.addActionListener(action);
 		constraints.gridx = 3;
@@ -137,13 +137,14 @@ public class LoanFrame extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				if (!gamesTable.getSelectionModel().isSelectionEmpty()) {
+					
 					partnersBox.setSelectedItem(videoclub.selectPartnerByCode(new Socios(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 0).toString(),null,null,null)));
+
 					gamesBox.setSelectedItem(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 1).toString());
 
 					try {
 						giveItBackField.setText(gamesTable.getModel().getValueAt(gamesTable.getSelectedRow(), 3).toString());
 					} catch (NullPointerException ex) {
-						// TODO: handle exception
 						giveItBackField.setText("");
 					}
 

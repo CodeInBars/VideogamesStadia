@@ -59,7 +59,7 @@ public class Socios {
 
 	@Override
 	public String toString() {
-		return "Dni: " + dni + "\tName: " + name + "\tSurname: " + surname + "\tCuenta: " + cuenta;
+		return dni + " -- " + name;
 	}
 
 }

@@ -49,7 +49,7 @@ public class VideoGames {
 
 	@Override
 	public String toString() {
-		return "Code: " + code + "\tName: " + name + "\tSinopsis: " + sinopsis;
+		return name;
 	}
 
 }
