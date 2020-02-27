@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import com.codelupo.videogames.controller.Controller;
@@ -64,6 +66,7 @@ public class ActionListeners implements ActionListener {
 			} else {
 				clean();
 				mainframe.getPartners().fillTable(videoclub.getAllPartners());
+				
 			}
 			break;
 		case "deletePartner":
@@ -74,6 +77,7 @@ public class ActionListeners implements ActionListener {
 			} else {
 				clean();
 				mainframe.getPartners().fillTable(videoclub.getAllPartners());
+				
 			}
 			break;
 		case "editPartner":
@@ -84,6 +88,7 @@ public class ActionListeners implements ActionListener {
 			} else {
 				clean();
 				mainframe.getPartners().fillTable(videoclub.getAllPartners());
+				
 			}
 			break;
 		case "games":
@@ -98,6 +103,7 @@ public class ActionListeners implements ActionListener {
 			} else {
 				clean();
 				mainframe.getGames().fillTable(videoclub.getAllGames());
+				
 			}
 			break;
 		case "deleteGame":
@@ -107,6 +113,7 @@ public class ActionListeners implements ActionListener {
 			} else {
 				clean();
 				mainframe.getGames().fillTable(videoclub.getAllGames());
+				
 			}
 			break;
 		case "editGame":
@@ -116,12 +123,14 @@ public class ActionListeners implements ActionListener {
 			} else {
 				clean();
 				mainframe.getGames().fillTable(videoclub.getAllGames());
+				
 			}
 			break;
 		case "loans":
 			mainframe.getMenu().setVisible(false);
 			mainframe.getLoans().setVisible(true);
 			mainframe.getLoans().fillTable(videoclub.getAllLoans());
+			refreshComboBox();
 			break;
 		case "addLoan":
 			try {
@@ -155,10 +164,7 @@ public class ActionListeners implements ActionListener {
 			game = (VideoGames) mainframe.getLoans().gamesBox.getSelectedItem();
 			break;
 		case "backtomenu":
-			mainframe.getPartners().setVisible(false);
-			mainframe.getGames().setVisible(false);
-			mainframe.getLoans().setVisible(false);
-			mainframe.getMenu().setVisible(true);
+			back();
 			break;
 		case "clean":
 			clean();
@@ -168,6 +174,31 @@ public class ActionListeners implements ActionListener {
 			break;
 
 		}
+	}
+	
+	private void back() {
+		mainframe.getPartners().setVisible(false);
+		mainframe.getGames().setVisible(false);
+		mainframe.getLoans().setVisible(false);
+		mainframe.getMenu().setVisible(true);
+	}
+	
+	private void refreshComboBox() {
+		List<VideoGames> juegos = videoclub.getAllGames();
+		VideoGames[] modelComboGames = new VideoGames[juegos.size()];
+		for (int i = 0; i < juegos.size(); i++) {
+			modelComboGames[i] = juegos.get(i);
+		}
+		mainframe.getLoans().setGamesModelBox(new DefaultComboBoxModel<VideoGames>(modelComboGames));
+		mainframe.getLoans().gamesBox.setModel(mainframe.getLoans().getGamesModelBox());
+		
+		List<Socios> socios = videoclub.getAllPartners();
+		Socios[] modelCombo = new Socios[socios.size()];
+		for (int i = 0; i < socios.size(); i++) {
+			modelCombo[i] = socios.get(i);
+		}
+		mainframe.getLoans().setPartnersModel(new DefaultComboBoxModel<Socios>(modelCombo));
+		mainframe.getLoans().partnersBox.setModel(mainframe.getLoans().getPartnersModel());
 	}
 
 	private void clean() {

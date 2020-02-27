@@ -181,6 +181,22 @@ public class LoanFrame extends JPanel {
 
 	}
 
+	public DefaultComboBoxModel<Socios> getPartnersModel() {
+		return partnersModel;
+	}
+
+	public void setPartnersModel(DefaultComboBoxModel<Socios> partnersModel) {
+		this.partnersModel = partnersModel;
+	}
+
+	public DefaultComboBoxModel<VideoGames> getGamesModelBox() {
+		return gamesModelBox;
+	}
+
+	public void setGamesModelBox(DefaultComboBoxModel<VideoGames> gamesModelBox) {
+		this.gamesModelBox = gamesModelBox;
+	}
+
 	public void fillTable(List<Prestamos> loanList) {
 		// Borramos los datos de la tabla libros
 		int filas = gamesModel.getRowCount();
