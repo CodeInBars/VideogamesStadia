@@ -32,7 +32,7 @@ import com.codelupo.model.VideoGames;
 public class Controlado extends HttpServlet {
 	
 
-	List<VideoGames> videogames = new ArrayList<VideoGames>();
+	List<VideoGames> videogames;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -42,7 +42,7 @@ public class Controlado extends HttpServlet {
 	private String url = "jdbc:mysql://localhost:3306/videogames";
 
 	private String usuario = "root";
-	private String clave = "root";
+	private String clave = "";
 
 	/**
 	 * Controller builder
@@ -52,7 +52,7 @@ public class Controlado extends HttpServlet {
 		// TODO Auto-generated method stub
 		super.init();
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			conexion = DriverManager.getConnection(url, usuario, clave);
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -98,7 +98,7 @@ public class Controlado extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		
-		videogames.add(new VideoGames(1,"Call of Duty","Shooter"));
+		videogames = getAllGames();
 		
 		request.setAttribute("games", videogames);
 		
