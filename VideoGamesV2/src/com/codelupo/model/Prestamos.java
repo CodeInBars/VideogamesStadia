@@ -1,5 +1,6 @@
 package com.codelupo.model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Prestamos {
@@ -15,6 +16,10 @@ public class Prestamos {
 		super();
 		this.socios = socios;
 		this.games = games;
+	}
+
+	public Prestamos(Socios selectPartnerByCode, VideoGames selectGameByCode, Date date, Date date2) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Socios getSocios() {
