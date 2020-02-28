@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
- 
+
+    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Videogames Stadia</title>
+	
+  <title>VideoGames Stadia</title>
 
   <!-- Bootstrap core CSS -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -26,7 +28,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Codelupo</a>
+      <a class="navbar-brand" href="#">CodeLupo</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -46,7 +48,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
           </li>
-          
+           <li class="nav-item">
+            <a class="nav-link" href="login">Login</a>
+          </li>
 
         </ul>
       </div>
@@ -60,29 +64,29 @@
 
       <div class="col-lg-3">
 
-        <h1 class="my-4">VIDEOGAMES STADIA</h1>
+        <h1 class="my-4">Stadia</h1>
         <div class="list-group">
-          <a href="filtro?categoria=Disparos" class="list-group-item">Disparos</a>
-          <a href="filtro?categoria=Estrategia" class="list-group-item">Estrategia</a>
-          <a href="filtro?categoria=Rol" class="list-group-item">Rol</a>
+                <a href="/Fruteria/lista/0" class="list-group-item">inicio</a>
+           <a href="../buscarCategoria/Fruta" class="list-group-item">Shooters</a>
+          <a href="../buscarCategoria/Hortaliza" class="list-group-item">Estrategia </a>
+          <a href="../buscarCategoria/Legumbre" class="list-group-item">Rol </a>
         </div>
+	 <!-- paginaciÃ³n -->
 
-      </div>
-      
-       <!-- paginación -->
            <c:set var="ind" value="0" scope="page" />
            <c:set var="ind2" value="0" scope="page" />
-	       <c:forEach items="${listaT}" var="item" varStatus="status2">
+	       <c:forEach items="${listaVegetales}" var="item" varStatus="status2">
          
-           <c:if test="${ind2 == 6}">
+           <c:if test="${status2.index %6 == 0}">
           
-              <a href="../listadoVegetales2/${ind}">${ind+1}</a> 
+              <a href="/Fruteria/lista/${ind}">${ind+1}</a> 
               <c:set var="ind" value="${ind + 1}" scope="page"/>
               <c:set var="ind2" value="0" scope="page"/>
           </c:if>
           <c:set var="ind2" value="${ind2 + 1}" scope="page"/>
        </c:forEach>
-       <!-- fin paginación -->
+       <!-- fin paginaciÃ³n -->
+      </div>
       
       <!-- /.col-lg-3 -->
 
@@ -128,13 +132,13 @@
         </div>
 
         <div class="row">
-		<c:forEach items="${listaVegetales}" var="v">
+		<c:forEach items="${listaVegetal}" var="v">
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="/img/${v.imagen}" alt=""></a>
+              <a href="#"><img class="card-img-top" src="${urlPublic}/img/${v.imagen}" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="carritoVegetal/${v.id}">${v.nombre}</a>
+                  <a href="/Fruteria/carritoVegetal/${v.id}">${v.nombre}</a>
                 </h4>
                 <h4 class="card-title">
                   ${v.categoria}
@@ -182,3 +186,4 @@
 </body>
 
 </html>
+
