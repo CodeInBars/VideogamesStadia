@@ -102,7 +102,7 @@ public class Controlado extends HttpServlet {
 		
 		request.setAttribute("games", videogames);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("lista.jsp");
 		rd.forward(request, response);
 	}
 

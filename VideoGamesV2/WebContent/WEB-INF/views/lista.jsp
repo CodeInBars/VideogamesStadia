@@ -48,9 +48,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
           </li>
-           <li class="nav-item">
-            <a class="nav-link" href="login">Login</a>
-          </li>
+          
 
         </ul>
       </div>
@@ -65,12 +63,7 @@
       <div class="col-lg-3">
 
         <h1 class="my-4">Stadia</h1>
-        <div class="list-group">
-                <a href="/Fruteria/lista/0" class="list-group-item">inicio</a>
-           <a href="../buscarCategoria/Fruta" class="list-group-item">Shooters</a>
-          <a href="../buscarCategoria/Hortaliza" class="list-group-item">Estrategia </a>
-          <a href="../buscarCategoria/Legumbre" class="list-group-item">Rol </a>
-        </div>
+        <!-- Aqui las vainas de añadir -->
 	 
       </div>
       
@@ -83,7 +76,7 @@
               <a href="#">${v.name}</a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="/Fruteria/carritoVegetal/${v.code}">${v.name}</a>
+                  ${v.name}
                 </h4>
                 <h4 class="card-title">
                   ${v.sinopsis}
@@ -92,7 +85,10 @@
                 <p class="card-text"></p>
               </div>
               <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <!-- Boton para el pdf -->
+				<a href = "<c:url value = "../VideoGamesV2/prestar"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Prestar</a>&nbsp&nbsp
+				<!-- Boton para el Correo -->
+				<a href = "<c:url value = "../VideoGamesV2/eliminar"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Eliminar</a>
               </div>
             </div>
           </div>
