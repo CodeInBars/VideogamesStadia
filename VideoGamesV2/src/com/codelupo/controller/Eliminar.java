@@ -15,7 +15,7 @@ public class Eliminar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-	
+	Controller cont = new Controller();
 	
     /**
      * @see HttpServlet#HttpServlet()
