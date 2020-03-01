@@ -1,15 +1,6 @@
 package com.codelupo.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -19,36 +10,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.codelupo.model.Prestamos;
 import com.codelupo.model.Socios;
-import com.codelupo.model.VideoGames;
-
-
 
 /**
- * Servlet implementation class Controlado
+ * Servlet implementation class SociosServlet
  */
-@WebServlet("/Controlado")
-public class Controlado extends HttpServlet {
+@WebServlet("/SociosInicio")
+public class SociosServlet extends HttpServlet {
 	
-
-	List<VideoGames> videogames;
+	List<Socios> socios;
 	Controller cont = new Controller();
 	private static final long serialVersionUID = 1L;
-	
-	
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SociosServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+		socios = cont.getAllPartners();
+		request.setAttribute("socios", socios);
 		
-		videogames = cont.getAllGames();
-		
-		request.setAttribute("games", videogames);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("views/lista.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("views/socios.jsp");
 		rd.forward(request, response);
 	}
 

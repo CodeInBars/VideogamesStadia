@@ -35,18 +35,15 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home
+            <a class="nav-link" href="../VideoGamesV2/inicio">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="socios.jsp">Socios</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
           </li>
           
 
@@ -57,6 +54,7 @@
 
   <!-- Page Content -->
   <div class="container">
+  <br />
 
     <div class="row">
 
@@ -70,31 +68,26 @@
       
 
         <div class="row">
-		<c:forEach items="${games}" var="v">
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#">${v.name}</a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  ${v.name}
-                </h4>
-                <h4 class="card-title">
-                  ${v.sinopsis}
-                </h4>
-                
-                <p class="card-text"></p>
-              </div>
-              <div class="card-footer">
-                <!-- Boton para el pdf -->
-				<a href = "<c:url value = "../VideoGamesV2/prestar"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Prestar</a>&nbsp&nbsp
-				<!-- Boton para el Correo -->
-				<a href = "<c:url value = "../VideoGamesV2/eliminar"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Eliminar</a>
-              </div>
-            </div>
-          </div>
-          </c:forEach>
+        <table>
+        	<tr>
+          		<td>ID &nbsp</td>
+          		<td>NOMBRE &nbsp</td>
+          		<td>GENERO &nbsp</td>         							
+          	</tr>
+		<c:forEach items="${socios}" var="v" varStatus="status">
 
-          
+	      	<tr>
+	        	<td>${v.dni}&nbsp</td>
+	          	<td>${v.name}&nbsp</td>
+	          	<td>${v.surname}&nbsp</td>
+	          	<td>${v.cuenta}&nbsp</td>
+	          	<td><a href = "<c:url value = "../VideoGamesV2/prestar?id=${v.dni}"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Prestar</a>&nbsp</td>
+				<td><a href = "<c:url value = "../VideoGamesV2/eliminar?id=${v.dni}"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Danger</a></td>	
+					
+	      	</tr>
+
+        </c:forEach>
+		</table>
           
           </div>
 		</div>
@@ -109,13 +102,6 @@
   </div>
   <!-- /.container -->
 
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-  </footer>
 
   <!-- Bootstrap core JavaScript -->
   <script src="https://augustobrigadaw.000webhostapp.com/resources2/vendor/jquery/jquery.min.js"></script>

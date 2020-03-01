@@ -116,6 +116,27 @@ public class Controller {
 
 		return game;
 	}
+	
+	public VideoGames selectGameByCode(String gameCode) {
+		VideoGames game = null;
+
+		try {
+			PreparedStatement sentencia = conexion.prepareStatement("select * from games where codigo = ?");
+
+			sentencia.setInt(1, Integer.parseInt(gameCode));
+
+			ResultSet rs = sentencia.executeQuery();
+			if (rs.next()) {
+				game = new VideoGames(rs.getInt(1), rs.getString(2), rs.getString(3));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return game;
+	}
+
 
 	/**
 	 * Get all the games stored
