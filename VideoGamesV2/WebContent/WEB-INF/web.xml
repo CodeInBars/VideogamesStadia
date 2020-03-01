@@ -14,6 +14,7 @@
         <servlet-class>com.codelupo.controller.Eliminar</servlet-class>
     </servlet>
 
+
   <!-- ================ Servlet Mappings ========================= -->
 
     <servlet-mapping>
@@ -26,4 +27,5 @@
         <url-pattern>/eliminar</url-pattern>
     </servlet-mapping>
     
+
 </web-app>

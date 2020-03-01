@@ -64,10 +64,9 @@
         <!-- Aqui las vainas de añadir -->
 	 
       </div>
-      
-      
 
         <div class="row">
+        <form action="../VideoGamesV2/aniadirG" method="POST">
         <table>
         	<tr>
           		<td>ID &nbsp</td>
@@ -86,8 +85,14 @@
 	      	</tr>
 
         </c:forEach>
+        	<tr>
+          		<td><input type="text" name="id" /></td>
+          		<td><input type="text" name="name" /></td>
+          		<td><input type="text" name="genero" /></td>  
+          		<td><input type="submit" class="btn btn-info" value="Añadir"></td>             							
+          	</tr>
 		</table>
-          
+          </form>
           </div>
 		</div>
         <!-- /.row -->

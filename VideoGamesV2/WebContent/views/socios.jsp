@@ -68,11 +68,14 @@
       
 
         <div class="row">
+        <form action="../VideoGamesV2/prestar" method="POST">
+        
         <table>
         	<tr>
-          		<td>ID &nbsp</td>
+          		<td>DNI &nbsp</td>
           		<td>NOMBRE &nbsp</td>
-          		<td>GENERO &nbsp</td>         							
+          		<td>APELLIDOS &nbsp</td>
+          		<td>CUENTA &nbsp</td>         							
           	</tr>
 		<c:forEach items="${socios}" var="v" varStatus="status">
 
@@ -87,8 +90,16 @@
 	      	</tr>
 
         </c:forEach>
+        
+        	<tr>
+          		<td><input type="text" name="dni" /></td>
+          		<td><input type="text" name="name" /></td>
+          		<td><input type="text" name="surname" /></td>
+          		<td><input type="text" name="account" /></td>
+          		<td><input type="submit" class="btn btn-info" value="Añadir"></td>         							
+          	</tr>
 		</table>
-          
+          </form>
           </div>
 		</div>
         <!-- /.row -->
