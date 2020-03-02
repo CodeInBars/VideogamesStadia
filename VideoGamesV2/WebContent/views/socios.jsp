@@ -68,7 +68,7 @@
       
 
         <div class="row">
-        <form action="../VideoGamesV2/prestar" method="POST">
+        <form action="../VideoGamesV2/AniadirS" method="POST">
         
         <table>
         	<tr>
@@ -85,7 +85,7 @@
 	          	<td>${v.surname}&nbsp</td>
 	          	<td>${v.cuenta}&nbsp</td>
 	          	<td><a href = "<c:url value = "../VideoGamesV2/prestar?id=${v.dni}"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Prestar</a>&nbsp</td>
-				<td><a href = "<c:url value = "../VideoGamesV2/eliminar?id=${v.dni}"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Danger</a></td>	
+				<td><a href = "<c:url value = "../VideoGamesV2/eliminarS?dni=${v.dni}"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Danger</a></td>	
 					
 	      	</tr>
 

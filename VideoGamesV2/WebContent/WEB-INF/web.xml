@@ -2,6 +2,9 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>VideoGamesV2</display-name>
   
+  <welcome-file-list>
+  	<welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
   
   <!-- ================ Servlet Declaraciones ========================= -->
     <servlet>
@@ -14,6 +17,20 @@
         <servlet-class>com.codelupo.controller.Eliminar</servlet-class>
     </servlet>
 
+	<servlet>
+        <servlet-name>eliminarS</servlet-name>
+        <servlet-class>com.codelupo.controller.EliminarS</servlet-class>
+    </servlet>
+    
+	<servlet>
+        <servlet-name>aniadirG</servlet-name>
+        <servlet-class>com.codelupo.controller.AniadirG</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>aniadirS</servlet-name>
+        <servlet-class>com.codelupo.controller.AniadirS</servlet-class>
+    </servlet>
 
   <!-- ================ Servlet Mappings ========================= -->
 
@@ -27,5 +44,19 @@
         <url-pattern>/eliminar</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+        <servlet-name>eliminarS</servlet-name>
+        <url-pattern>/eliminarS</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>aniadirG</servlet-name>
+        <url-pattern>/aniadirG</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>aniadirS</servlet-name>
+        <url-pattern>/aniadirS</url-pattern>
+    </servlet-mapping>
 
 </web-app>
