@@ -1,10 +1,14 @@
 package com.codelupo.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,12 +18,22 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import com.codelupo.controller.ActionListeners;
+import com.codelupo.main.BackGround;
 
 public class MenuFrame extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+	private BackGround backGround;
 
 	public MenuFrame(ActionListeners actions) {
 		super();
 
+		try {
+			backGround = new BackGround(ImageIO.read(new File("src/com/codelupo/images/blue.jpg")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.setBorder(backGround);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.weightx = 2;
 		constraints.weighty = 4;
@@ -30,7 +44,8 @@ public class MenuFrame extends JPanel {
 		// Label title
 		JLabel title = new JLabel();
 		title.setText(" Video Games Lupo Xan ");
-		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		title.setOpaque(true);
+		title.setFont(new Font(Font.SERIF, Font.BOLD, 24));
 		title.setForeground(Color.BLUE);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -73,6 +88,8 @@ public class MenuFrame extends JPanel {
 		JButton exit = new JButton("Salir");
 		exit.setActionCommand("exit");
 		exit.addActionListener(actions);
+		exit.setPreferredSize(new Dimension(100,50));
+		exit.setFont(new Font(Font.SERIF,Font.BOLD,15));
 		constraints.gridx = 3;
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;

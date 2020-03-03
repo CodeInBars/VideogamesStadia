@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import com.codelupo.videogames.controller.Controller;
 import com.codelupo.videogames.model.Prestamos;
@@ -59,25 +60,52 @@ public class ActionListeners implements ActionListener {
 			mainframe.getPartners().fillTable(videoclub.getAllPartners());
 			break;
 		case "addPartner":
-			if (!videoclub.addPartners(new Socios(mainframe.getPartners().dniField.getText(),
-					mainframe.getPartners().nameField.getText(), mainframe.getPartners().surnameField.getText(),
-					mainframe.getPartners().countField.getText()))) {
-				JOptionPane.showMessageDialog(null, "Error al añadir el socio");
+			if (checkFields(mainframe.getPartners().dniField, mainframe.getPartners().nameField,
+					mainframe.getPartners().surnameField, mainframe.getPartners().countField)) {
+				if (!videoclub.addPartners(new Socios(mainframe.getPartners().dniField.getText(),
+						mainframe.getPartners().nameField.getText(), mainframe.getPartners().surnameField.getText(),
+						mainframe.getPartners().countField.getText()))) {
+					JOptionPane.showMessageDialog(null, "Error al añadir el socio");
+				} else {
+					clean();
+					mainframe.getPartners().fillTable(videoclub.getAllPartners());
+
+				}
 			} else {
-				clean();
-				mainframe.getPartners().fillTable(videoclub.getAllPartners());
-				
+				JOptionPane.showMessageDialog(null, "Rellena los campos antes de añadir el socio");
 			}
 			break;
 		case "deletePartner":
-			if (!videoclub.removePartners(new Socios(mainframe.getPartners().dniField.getText(),
-					mainframe.getPartners().nameField.getText(), mainframe.getPartners().surnameField.getText(),
-					mainframe.getPartners().countField.getText()))) {
-				JOptionPane.showMessageDialog(null, "Error al borrar el socio");
+			boolean flag = true;
+			List<Prestamos> prestamos;
+			if (checkFields(mainframe.getPartners().dniField, mainframe.getPartners().nameField,
+					mainframe.getPartners().surnameField, mainframe.getPartners().countField)) {
+
+				Socios s = videoclub.selectPartnerByCode(new Socios(mainframe.getPartners().dniField.getText(),
+						mainframe.getPartners().nameField.getText(), mainframe.getPartners().surnameField.getText(),
+						mainframe.getPartners().countField.getText()));
+
+				prestamos = videoclub.selectLoanByCode(s);
+
+				for (Prestamos p : prestamos) {
+					if (p.getFechaDevolucion() == null) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag) {
+					if (!videoclub.removePartners(s)) {
+						JOptionPane.showMessageDialog(null, "Error al borrar el socio");
+					} else {
+						clean();
+						mainframe.getPartners().fillTable(videoclub.getAllPartners());
+
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "El socio aún tiene préstamos pendientes");
+				}
 			} else {
-				clean();
-				mainframe.getPartners().fillTable(videoclub.getAllPartners());
-				
+				JOptionPane.showMessageDialog(null, "Rellena los campos");
 			}
 			break;
 		case "editPartner":
@@ -88,7 +116,7 @@ public class ActionListeners implements ActionListener {
 			} else {
 				clean();
 				mainframe.getPartners().fillTable(videoclub.getAllPartners());
-				
+
 			}
 			break;
 		case "games":
@@ -97,34 +125,68 @@ public class ActionListeners implements ActionListener {
 			mainframe.getGames().fillTable(videoclub.getAllGames());
 			break;
 		case "addGame":
-			if (!videoclub.addVideoGame(new VideoGames(0, mainframe.getGames().nameField.getText(),
-					mainframe.getGames().sinopsisField.getText()))) {
-				JOptionPane.showMessageDialog(null, "Error al añadir el juego");
+			if (checkFields(mainframe.getGames().codeField, mainframe.getGames().nameField,
+					mainframe.getGames().sinopsisField)) {
+				if (!videoclub.addVideoGame(new VideoGames(0, mainframe.getGames().nameField.getText(),
+						mainframe.getGames().sinopsisField.getText()))) {
+					JOptionPane.showMessageDialog(null, "Error al añadir el juego");
+				} else {
+					clean();
+					mainframe.getGames().fillTable(videoclub.getAllGames());
+
+				}
 			} else {
-				clean();
-				mainframe.getGames().fillTable(videoclub.getAllGames());
-				
+				JOptionPane.showMessageDialog(null, "Rellenar los campos antes de añadir");
 			}
+
 			break;
 		case "deleteGame":
-			if (!videoclub.removeVideoGame(new VideoGames(Integer.parseInt(mainframe.getGames().codeField.getText()),
-					mainframe.getGames().nameField.getText(), mainframe.getGames().sinopsisField.getText()))) {
-				JOptionPane.showMessageDialog(null, "Error al borrar el juego");
+			flag = true;
+			if (checkFields(mainframe.getGames().codeField, mainframe.getGames().nameField,
+					mainframe.getGames().sinopsisField)) {
+				VideoGames vg = videoclub.selectGameByCode(new VideoGames(
+						Integer.parseInt(mainframe.getGames().codeField.getText()),
+						mainframe.getGames().nameField.getText(), mainframe.getGames().sinopsisField.getText()));
+
+				prestamos = videoclub.selectLoanByCode(vg);
+
+				for (Prestamos p : prestamos) {
+					if (p.getFechaDevolucion() == null) {
+						flag = false;
+						break;
+					}
+				}
+
+				if (flag) {
+					if (!videoclub.removeVideoGame(vg)) {
+						JOptionPane.showMessageDialog(null, "Error al borrar el juego");
+					} else {
+						clean();
+						mainframe.getGames().fillTable(videoclub.getAllGames());
+
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Alguien tiene el juego sin devolver aún");
+				}
 			} else {
-				clean();
-				mainframe.getGames().fillTable(videoclub.getAllGames());
-				
+				JOptionPane.showMessageDialog(null, "Rellenar los campos antes de borrar");
 			}
 			break;
 		case "editGame":
-			if (!videoclub.updateVideoGame(new VideoGames(Integer.parseInt(mainframe.getGames().codeField.getText()),
-					mainframe.getGames().nameField.getText(), mainframe.getGames().sinopsisField.getText()))) {
-				JOptionPane.showMessageDialog(null, "Error al editar el juego");
+			if (checkFields(mainframe.getGames().codeField, mainframe.getGames().nameField,
+					mainframe.getGames().sinopsisField)) {
+				if (!videoclub.updateVideoGame(new VideoGames(
+						Integer.parseInt(mainframe.getGames().codeField.getText()),
+						mainframe.getGames().nameField.getText(), mainframe.getGames().sinopsisField.getText()))) {
+					JOptionPane.showMessageDialog(null, "Error al editar el juego");
+				} else {
+					clean();
+					mainframe.getGames().fillTable(videoclub.getAllGames());
+				}
 			} else {
-				clean();
-				mainframe.getGames().fillTable(videoclub.getAllGames());
-				
+				JOptionPane.showMessageDialog(null, "Rellenar los campos antes de editar");
 			}
+
 			break;
 		case "loans":
 			mainframe.getMenu().setVisible(false);
@@ -134,7 +196,8 @@ public class ActionListeners implements ActionListener {
 			break;
 		case "addLoan":
 			try {
-				if (!videoclub.addLoan(new Prestamos((Socios) mainframe.getLoans().partnersBox.getSelectedItem(),(VideoGames) mainframe.getLoans().gamesBox.getSelectedItem(),new Date(), null))){
+				if (!videoclub.addLoan(new Prestamos((Socios) mainframe.getLoans().partnersBox.getSelectedItem(),
+						(VideoGames) mainframe.getLoans().gamesBox.getSelectedItem(), new Date(), null))) {
 					JOptionPane.showMessageDialog(null, "Error al prestar el juego");
 				} else {
 					clean();
@@ -147,14 +210,18 @@ public class ActionListeners implements ActionListener {
 			break;
 		case "giveBackGame":
 			try {
-				if(!videoclub.updateLoan(new Prestamos(socio,game,new SimpleDateFormat("yyyy-MM-dd").parse(mainframe.getLoans().gamesTable.getModel().getValueAt(mainframe.getLoans().gamesTable.getSelectedRow(), 2).toString()),new Date()))) {
+				if (!videoclub.updateLoan(new Prestamos(socio, game,
+						new SimpleDateFormat("yyyy-MM-dd").parse(mainframe.getLoans().gamesTable.getModel()
+								.getValueAt(mainframe.getLoans().gamesTable.getSelectedRow(), 2).toString()),
+						new Date()))) {
 					JOptionPane.showMessageDialog(null, "Error al devolver el juego");
 				} else {
 					mainframe.getLoans().fillTable(videoclub.getAllLoans());
 				}
 			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error, la fecha no es correcta");
+			} catch (ArrayIndexOutOfBoundsException e2) {
+				JOptionPane.showMessageDialog(null, "Debes seleccionar primero un préstamo");
 			}
 			break;
 		case "changePartner":
@@ -175,14 +242,14 @@ public class ActionListeners implements ActionListener {
 
 		}
 	}
-	
+
 	private void back() {
 		mainframe.getPartners().setVisible(false);
 		mainframe.getGames().setVisible(false);
 		mainframe.getLoans().setVisible(false);
 		mainframe.getMenu().setVisible(true);
 	}
-	
+
 	private void refreshComboBox() {
 		List<VideoGames> juegos = videoclub.getAllGames();
 		VideoGames[] modelComboGames = new VideoGames[juegos.size()];
@@ -191,7 +258,7 @@ public class ActionListeners implements ActionListener {
 		}
 		mainframe.getLoans().setGamesModelBox(new DefaultComboBoxModel<VideoGames>(modelComboGames));
 		mainframe.getLoans().gamesBox.setModel(mainframe.getLoans().getGamesModelBox());
-		
+
 		List<Socios> socios = videoclub.getAllPartners();
 		Socios[] modelCombo = new Socios[socios.size()];
 		for (int i = 0; i < socios.size(); i++) {
@@ -210,6 +277,17 @@ public class ActionListeners implements ActionListener {
 		mainframe.getGames().codeField.setText("");
 		mainframe.getGames().nameField.setText("");
 		mainframe.getGames().sinopsisField.setText("");
+	}
+
+	private boolean checkFields(JTextField... fields) {
+		boolean res = true;
+		for (int i = 0; i < fields.length; i++) {
+			if (fields[i].getText().equals("")) {
+				res = false;
+				break;
+			}
+		}
+		return res;
 	}
 
 }

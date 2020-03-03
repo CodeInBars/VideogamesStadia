@@ -1,11 +1,15 @@
 package com.codelupo.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,16 +25,26 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.codelupo.controller.ActionListeners;
+import com.codelupo.main.BackGround;
 import com.codelupo.videogames.model.VideoGames;
 
 public class GamesFrame extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private DefaultTableModel gamesModel;
 	public JTextField codeField, nameField, sinopsisField;
 	private JLabel title, labelCode, labelNombre, labelSinopsis;
-
+	private BackGround backGround;
 	public GamesFrame(ActionListeners action) {
 		super();
+		
+		try {
+			backGround = new BackGround(ImageIO.read(new File("src/com/codelupo/images/blue.jpg")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.setBorder(backGround);
+		
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.weightx = 1000;
 		constraints.weighty = 1;
@@ -41,8 +55,10 @@ public class GamesFrame extends JPanel {
 		// Label title
 		title = new JLabel();
 		title.setText(" Juegos ");
-		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		title.setFont(new Font(Font.SERIF, Font.BOLD, 24));
 		title.setForeground(Color.BLUE);
+		title.setOpaque(true);
+		title.setPreferredSize(new Dimension(300,50));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		constraints.gridx = 0;
@@ -52,12 +68,22 @@ public class GamesFrame extends JPanel {
 		this.add(title, constraints);
 		// JLabels
 		labelCode = new JLabel("Código");
+		labelCode.setOpaque(true);
+		labelCode.setBackground(new Color(51,153,255));
+		labelCode.setFont(new Font(Font.SERIF,Font.BOLD,15));
+		labelCode.setHorizontalAlignment(SwingConstants.CENTER);
+		labelCode.setPreferredSize(new Dimension(100,50));
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		this.add(labelCode, constraints);
 		labelNombre = new JLabel("Nombre");
+		labelNombre.setOpaque(true);
+		labelNombre.setBackground(new Color(51,153,255));
+		labelNombre.setFont(new Font(Font.SERIF,Font.BOLD,15));
+		labelNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		labelNombre.setPreferredSize(new Dimension(100,50));
 		constraints.gridx = 2;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
@@ -65,6 +91,11 @@ public class GamesFrame extends JPanel {
 		this.add(labelNombre, constraints);
 		
 		labelSinopsis = new JLabel("Sinopsis");
+		labelSinopsis.setOpaque(true);
+		labelSinopsis.setBackground(new Color(51,153,255));
+		labelSinopsis.setFont(new Font(Font.SERIF,Font.BOLD,15));
+		labelSinopsis.setHorizontalAlignment(SwingConstants.CENTER);
+		labelSinopsis.setPreferredSize(new Dimension(100,50));
 		constraints.gridx = 4;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
@@ -97,6 +128,8 @@ public class GamesFrame extends JPanel {
 		String[] columns = { "Código", "Nombre", "Sinopsis" };
 		// CEldas no editables
 		gamesModel = new DefaultTableModel(columns, 0) {
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column) {
 				return false;// This causes all cells to be not editable
 			}
@@ -130,6 +163,8 @@ public class GamesFrame extends JPanel {
 		JButton backToMenu = new JButton("Menú");
 		backToMenu.setActionCommand("backtomenu");
 		backToMenu.addActionListener(action);
+		backToMenu.setPreferredSize(new Dimension(100,50));
+		backToMenu.setFont(new Font(Font.SERIF,Font.BOLD,15));
 		constraints.gridx = 6;
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;
@@ -139,6 +174,8 @@ public class GamesFrame extends JPanel {
 		JButton cleanButton = new JButton("Limpiar campos");
 		cleanButton.setActionCommand("clean");
 		cleanButton.addActionListener(action);
+		cleanButton.setPreferredSize(new Dimension(150,50));
+		cleanButton.setFont(new Font(Font.SERIF,Font.BOLD,15));
 		constraints.gridx = 6;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
@@ -148,6 +185,9 @@ public class GamesFrame extends JPanel {
 		JButton addGame = new JButton("Añadir Juego");
 		addGame.setActionCommand("addGame");
 		addGame.addActionListener(action);
+		addGame.setBackground(new Color(51,150,70));
+		addGame.setPreferredSize(new Dimension(150,75));
+		addGame.setFont(new Font(Font.SERIF,Font.BOLD,15));
 		constraints.gridx = 5;
 		constraints.gridy = 3;
 		constraints.gridwidth = 1;
@@ -157,6 +197,9 @@ public class GamesFrame extends JPanel {
 		JButton deleteGame = new JButton("Borrar Juego");
 		deleteGame.setActionCommand("deleteGame");
 		deleteGame.addActionListener(action);
+		deleteGame.setBackground(new Color(150,50,70));
+		deleteGame.setPreferredSize(new Dimension(150,75));
+		deleteGame.setFont(new Font(Font.SERIF,Font.BOLD,15));
 		constraints.gridx = 5;
 		constraints.gridy = 4;
 		constraints.gridwidth = 1;
@@ -166,6 +209,9 @@ public class GamesFrame extends JPanel {
 		JButton editGame = new JButton("Editar Juego");
 		editGame.setActionCommand("editGame");
 		editGame.addActionListener(action);
+		editGame.setBackground(new Color(255,153,0));
+		editGame.setPreferredSize(new Dimension(150,75));
+		editGame.setFont(new Font(Font.SERIF,Font.BOLD,15));
 		constraints.gridx = 5;
 		constraints.gridy = 5;
 		constraints.gridwidth = 1;
