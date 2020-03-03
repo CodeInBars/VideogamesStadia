@@ -1,46 +1,111 @@
 package com.codelupo.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class Prestamos {
-	private Socios socios;
-	private ArrayList<VideoGames> games = new ArrayList<VideoGames>();
+	
+	private String dni;
+	private int codigo;
+	private Date fechaPrestamo;
+	private Date fDevolucion;
 
+	
 	public Prestamos() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Prestamos(Socios socios, ArrayList<VideoGames> games) {
+
+	public Prestamos(String dni, int id, Date fPrestamo, Date fDevolucion) {
 		super();
-		this.socios = socios;
-		this.games = games;
+		this.dni = dni;
+		this.codigo = id;
+		this.fechaPrestamo = fPrestamo;
+		this.fDevolucion = fDevolucion;
 	}
 
-	public Prestamos(Socios selectPartnerByCode, VideoGames selectGameByCode, Date date, Date date2) {
-		// TODO Auto-generated constructor stub
+
+	
+
+
+	public Prestamos(String dni, int id, Date fPrestamo) {
+		super();
+		this.dni = dni;
+		this.codigo = id;
+		this.fechaPrestamo = fPrestamo;
 	}
 
-	public Socios getSocios() {
-		return socios;
+
+
+	/**
+	 * @return the dni
+	 */
+	public String getDni() {
+		return dni;
 	}
 
-	public void setSocios(Socios socios) {
-		this.socios = socios;
+
+	/**
+	 * @param dni the dni to set
+	 */
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
-	public ArrayList<VideoGames> getGames() {
-		return games;
+
+	/**
+	 * @return the id
+	 */
+	public int getCodigo() {
+		return codigo;
 	}
 
-	public void setGames(ArrayList<VideoGames> games) {
-		this.games = games;
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
-	@Override
-	public String toString() {
-		return "Socios: " + socios + "\tGames: " + games;
+
+	/**
+	 * @return the fPrestamo
+	 */
+	public Date getfechaPrestamo() {
+		return fechaPrestamo;
 	}
+
+
+	/**
+	 * @param fPrestamo the fPrestamo to set
+	 */
+	public void setfechaPrestamo(Date fPrestamo) {
+		this.fechaPrestamo = fPrestamo;
+	}
+
+
+	/**
+	 * @return the fDevolucion
+	 */
+	public Date getfDevolucion() {
+		return fDevolucion;
+	}
+
+
+	/**
+	 * @param fDevolucion the fDevolucion to set
+	 */
+	public void setfDevolucion(Date fDevolucion) {
+		this.fDevolucion = fDevolucion;
+	}
+
+
+	
+
+	
+
+	
 
 }

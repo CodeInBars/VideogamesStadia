@@ -43,7 +43,7 @@
             <a class="nav-link" href="../VideoGamesV2/SociosInicio">Socios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
+            <a class="nav-link" href="../VideoGamesV2/Prestamos">Prestamos</a>
           </li>
           
 
@@ -69,7 +69,7 @@
         <form action="../VideoGamesV2/AniadirG" method="POST">
         <table>
         	<tr>
-          		<td>ID &nbsp</td>
+        		<td>&nbsp</td>
           		<td>NOMBRE &nbsp</td>
           		<td>GENERO &nbsp</td>         							
           	</tr>
@@ -79,7 +79,7 @@
 	        	<td>${v.code}&nbsp</td>
 	          	<td>${v.name}&nbsp</td>
 	          	<td>${v.sinopsis}&nbsp</td>
-	          	<td><a href = "<c:url value = "../VideoGamesV2/prestar?id=${v.code}"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Prestar</a>&nbsp</td>
+	          	<td><a href = "<c:url value = "../VideoGamesV2/EditarG?id=${v.code}"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Editar</a>&nbsp</td>
 				<td><a href = "<c:url value = "../VideoGamesV2/eliminar?id=${v.code}"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Danger</a></td>	
 					
 	      	</tr>
