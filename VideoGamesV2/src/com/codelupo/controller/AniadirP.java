@@ -1,6 +1,9 @@
 package com.codelupo.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.codelupo.model.Prestamos;
+
 /**
  * Servlet implementation class AniadirP
  */
@@ -17,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AniadirP extends HttpServlet {
 	
 	Controller cont = new Controller();
-	com.codelupo.model.Prestamos prest;
+	Prestamos prest;
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -33,13 +38,23 @@ public class AniadirP extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String dni = request.getParameter("dni");
-		String id = request.getParameter("codigo");
-		String fPrestamo = request.getParameter("fechaprestamo");
-		prest = new com.codelupo.model.Prestamos(dni, Integer.parseInt(id), new Date(fPrestamo));
-		cont.addLoan(prest);
-		RequestDispatcher rd = request.getRequestDispatcher("/Prestamos");
-		rd.forward(request, response);
+		
+		
+		try {
+			
+			String dni = request.getParameter("dni");
+			String id = request.getParameter("id");
+			String fPrestamo = request.getParameter("fechaprestamo");			
+			DateFormat dFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Date date1= dFormat.parse(fPrestamo);
+			prest = new Prestamos(dni, Integer.parseInt(id), date1);
+			cont.addLoan(prest);
+			RequestDispatcher rd = request.getRequestDispatcher("/Prestamos");
+			rd.forward(request, response);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**

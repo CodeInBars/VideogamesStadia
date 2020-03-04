@@ -89,9 +89,17 @@
         </c:forEach>
         
         	<tr>
-          		<td><input type="text" name="dni" /></td>
-          		<td><input type="text" name="codigo" /></td>
-          		<td><input type="text" name="fechaprestamo" /></td>
+          		<td><select name="dni">
+          				<c:forEach items="${socios}" var="v" varStatus="status">
+  							<option value="${v.dni}">${v.dni}</option>
+  						</c:forEach>
+				</select></td>
+          		<td><select name="id">
+          				<c:forEach items="${juegos}" var="v" varStatus="status">
+  							<option value="${v.code}">${v.name}</option>
+  						</c:forEach>
+				</select></td>
+          		<td><input type="date" name="fechaprestamo" /></td>
           		
           		<td><input type="submit" class="btn btn-info" value="Añadir"></td>         							
           	</tr>

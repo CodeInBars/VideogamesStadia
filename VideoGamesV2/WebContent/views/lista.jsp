@@ -69,7 +69,7 @@
         <form action="../VideoGamesV2/AniadirG" method="POST">
         <table>
         	<tr>
-        		<td>&nbsp</td>
+        		<td>ID &nbsp</td>
           		<td>NOMBRE &nbsp</td>
           		<td>GENERO &nbsp</td>         							
           	</tr>

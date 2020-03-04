@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.codelupo.model.Prestamos;
+import com.codelupo.model.Socios;
+import com.codelupo.model.VideoGames;
 
 /**
  * Servlet implementation class Prestamos
@@ -20,6 +22,8 @@ public class PrestamosInicio extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Controller cont = new Controller();
 	List<Prestamos> prestamos;
+	List<VideoGames> videogames;
+	List<Socios> socios;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,8 +38,11 @@ public class PrestamosInicio extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		prestamos = cont.getAllLoans();
+		videogames = cont.getAllGames();
+		socios = cont.getAllPartners();
 		request.setAttribute("prestamos", prestamos);
-		
+		request.setAttribute("juegos", videogames);
+		request.setAttribute("socios", socios);
 		RequestDispatcher rd = request.getRequestDispatcher("views/prest.jsp");
 		rd.forward(request, response);
 	}
