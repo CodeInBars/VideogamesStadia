@@ -34,17 +34,12 @@ public class Devolver extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
-		
 		String id = request.getParameter("id");
 		String dni = request.getParameter("dni");
 		prest.setDni(dni);
 		prest.setCodigo(Integer.parseInt(id));
 		cont.updateLoan(prest);
 		response.sendRedirect("../VideoGamesV2/Prestamos");
-		//RequestDispatcher rd = request.getRequestDispatcher("../VideoGamesV2/Prestamos");
-		//rd.forward(request, response);
-		
 
 	}
 

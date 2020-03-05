@@ -82,7 +82,7 @@
 	          	<td>${v.name}&nbsp</td>
 	          	<td>${v.surname}&nbsp</td>
 	          	<td>${v.cuenta}&nbsp</td>
-	          	<td><a href = "<c:url value = "../VideoGamesV2/EditarS?dni=${v.dni}"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Prestar</a>&nbsp</td>
+	          	<td><a href = "<c:url value = "../VideoGamesV2/EditarS?dni=${v.dni}"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Editar</a>&nbsp</td>
 				<td><a href = "<c:url value = "../VideoGamesV2/eliminarS?dni=${v.dni}"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Danger</a></td>	
 					
 	      	</tr>

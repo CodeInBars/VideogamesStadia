@@ -508,4 +508,17 @@ public class Controller {
 		return dates;
 	}
 
+	public void removeLoans(VideoGames vid) {
+		
+		try {
+			PreparedStatement sentencia = conexion.prepareStatement("delete from prestamos where codigo = ?");
+			sentencia.setInt(1, vid.getCode());
+			sentencia.executeUpdate();
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

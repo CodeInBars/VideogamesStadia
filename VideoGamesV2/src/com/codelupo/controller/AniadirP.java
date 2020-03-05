@@ -1,10 +1,12 @@
 package com.codelupo.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,6 +25,7 @@ public class AniadirP extends HttpServlet {
 	
 	Controller cont = new Controller();
 	Prestamos prest;
+	List<Prestamos> prestamo;
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -39,7 +42,8 @@ public class AniadirP extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		
-		
+		prestamo = cont.getAllLoans();
+		boolean s = false;
 		try {
 			
 			String dni = request.getParameter("dni");
@@ -48,9 +52,30 @@ public class AniadirP extends HttpServlet {
 			DateFormat dFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Date date1= dFormat.parse(fPrestamo);
 			prest = new Prestamos(dni, Integer.parseInt(id), date1);
-			cont.addLoan(prest);
-			RequestDispatcher rd = request.getRequestDispatcher("/Prestamos");
-			rd.forward(request, response);
+			
+			for(int i = 0; i<prestamo.size(); i++) {
+				
+				if(prestamo.get(i).getDni().equalsIgnoreCase(dni)) {					
+					if((prestamo.get(i).getCodigo() == (Integer.parseInt(id))) && prestamo.get(i).getfDevolucion() == null) {
+						
+						s = true;
+					}
+				}
+			}
+			if(!s) {
+				System.out.println("AQUI");
+				cont.addLoan(prest);
+				RequestDispatcher rd = request.getRequestDispatcher("/Prestamos");
+				rd.forward(request, response);
+			}else {
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+			    out.println("<script type=\"text/javascript\">");
+			    out.println("alert('Este cliente tiene este videojuego sin devolver');");
+			    out.println("location.href='../VideoGamesV2/Prestamos'");
+			    out.println("</script>");
+			}
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
