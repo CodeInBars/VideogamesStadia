@@ -23,7 +23,7 @@ create table prestamos(
     fechaPrestamo Date,
     fechaDevolucion Date,
     PRIMARY KEY (codigo,dni,fechaPrestamo),
-    Foreign key(codigo) References games(codigo),
+    Foreign key(codigo) References games(codigo) on delete cascade,
     Foreign key(dni) References socios(dni) on delete cascade
 );
 
