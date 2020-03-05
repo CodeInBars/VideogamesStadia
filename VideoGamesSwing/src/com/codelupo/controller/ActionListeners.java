@@ -196,12 +196,24 @@ public class ActionListeners implements ActionListener {
 			break;
 		case "addLoan":
 			try {
+				flag = true;
+				prestamos = videoclub.getAllLoans();
+				for(Prestamos p : prestamos) {
+					if(p.getSocios().getDni().equals(socio.getDni()) && p.getGames().getCode() == game.getCode() && p.getFechaDevolucion() == null) {
+						flag = false;
+						break;
+					}
+				}
+				if(flag) {
 				if (!videoclub.addLoan(new Prestamos((Socios) mainframe.getLoans().partnersBox.getSelectedItem(),
 						(VideoGames) mainframe.getLoans().gamesBox.getSelectedItem(), new Date(), null))) {
 					JOptionPane.showMessageDialog(null, "Error al prestar el juego");
 				} else {
 					clean();
 					mainframe.getLoans().fillTable(videoclub.getAllLoans());
+				}
+				}else {
+					JOptionPane.showMessageDialog(null, "Debes devolver el juego primero antes de volver a prestarlo");
 				}
 			} catch (HeadlessException e1) {
 				// TODO Auto-generated catch block
