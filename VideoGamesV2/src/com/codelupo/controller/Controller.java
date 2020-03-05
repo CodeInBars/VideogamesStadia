@@ -400,7 +400,7 @@ public class Controller {
 
 			ResultSet rs = sentencia.executeQuery();
 			while (rs.next()) {
-				prestamos.add(new Prestamos(this.selectPartnerByCode(new Socios(rs.getString(1),null,null,null)),this.selectGameByCode(new VideoGames(rs.getInt(2),null,null)),rs.getDate(3),rs.getDate(4)));
+				prestamos.add(new Prestamos(rs.getString(1),rs.getInt(2),rs.getDate(3),rs.getDate(4)));
 			}
 
 		} catch (SQLException e) {
@@ -421,7 +421,7 @@ public class Controller {
 			Statement sentencia = conexion.createStatement();
 			ResultSet rs = sentencia.executeQuery("select * from prestamos");
 			while (rs.next()) {
-				loans.add(new Prestamos(this.selectPartnerByCode(new Socios(rs.getString(1),null,null,null)),this.selectGameByCode(new VideoGames(rs.getInt(2),null,null)),rs.getDate(3),rs.getDate(4)));
+				loans.add(new Prestamos(rs.getString(1),rs.getInt(2),rs.getDate(3),rs.getDate(4)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -436,14 +436,16 @@ public class Controller {
 	 * @param loan The loan to be stored
 	 * @return If false --> Something´s wrong
 	 */
+	
+	
 	public boolean addLoan(Prestamos loan) {
 		boolean res = false;
 
 		try {
 			PreparedStatement sentencia = conexion.prepareStatement("insert into prestamos values (?, ?, ?, null)");
 
-			sentencia.setString(1, loan.getSocios().getDni());
-			//sentencia.setInt(2, loan.getGames().getCode());
+			sentencia.setString(1, loan.getDni());
+			sentencia.setInt(2, loan.getCodigo());
 			sentencia.setDate(3, new java.sql.Date(new Date().getTime()));
 
 			if (sentencia.executeUpdate() == 1) {
@@ -466,12 +468,12 @@ public class Controller {
 		boolean res = false;
 		
 		try {
-			PreparedStatement sentencia = conexion.prepareStatement("update prestamos set fechaDevolucion = ? where dni = ? and codigo = ? and fechaPrestamo = ?");
+			PreparedStatement sentencia = conexion.prepareStatement("update prestamos set fechaDevolucion = ? where dni = ? and codigo = ?");
 
 			sentencia.setDate(1, new java.sql.Date(new Date().getTime()));
-			sentencia.setString(2, loan.getSocios().getDni());
-			//sentencia.setInt(3, loan.getGames().getCode());
-			//sentencia.setDate(4, new java.sql.Date(loan.getFechaPrestamo().getTime()));
+			sentencia.setString(2, loan.getDni());
+			sentencia.setInt(3, loan.getCodigo());
+
 
 			if (sentencia.executeUpdate() == 1) {
 				res = true;

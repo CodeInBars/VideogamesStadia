@@ -35,10 +35,12 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="../VideoGamesV2/inicio">Home</a>
+            <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../VideoGamesV2/SociosInicio">Socios<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="../VideoGamesV2/SociosInicio">Socios</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../VideoGamesV2/Prestamos">Prestamos</a>
@@ -62,40 +64,27 @@
         <!-- Aqui las vainas de añadir -->
 	 
       </div>
-      
-      
 
         <div class="row">
-        <form action="../VideoGamesV2/AniadirS" method="POST">
-        
+        <form action="../VideoGamesV2/EditarFS" method="POST">
         <table>
         	<tr>
-          		<td>DNI &nbsp</td>
+        		<td>&nbsp</td>
           		<td>NOMBRE &nbsp</td>
-          		<td>APELLIDOS &nbsp</td>
-          		<td>CUENTA &nbsp</td>         							
+          		<td>GENERO &nbsp</td>         							
           	</tr>
-		<c:forEach items="${socios}" var="v" varStatus="status">
+		<c:forEach items="${games}" var="v" varStatus="status">
 
 	      	<tr>
-	        	<td>${v.dni}&nbsp</td>
-	          	<td>${v.name}&nbsp</td>
-	          	<td>${v.surname}&nbsp</td>
-	          	<td>${v.cuenta}&nbsp</td>
-	          	<td><a href = "<c:url value = "../VideoGamesV2/EditarS?dni=${v.dni}"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Prestar</a>&nbsp</td>
-				<td><a href = "<c:url value = "../VideoGamesV2/eliminarS?dni=${v.dni}"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Danger</a></td>	
-					
+	        	<td><input type="hidden" name="id" value="${v.code}"/>&nbsp</td>
+	          	<td><input type="text" name="name" value="${v.name}" />&nbsp</td>
+	          	<td><input type="text" name="sipnosis" value="${v.sinopsis}" />&nbsp</td>
+	          	<td><input type="submit" class="btn btn-success" value="Editar"></td>
+
 	      	</tr>
 
         </c:forEach>
-        
-        	<tr>
-          		<td><input type="text" name="dni" /></td>
-          		<td><input type="text" name="name" /></td>
-          		<td><input type="text" name="surname" /></td>
-          		<td><input type="text" name="account" /></td>
-          		<td><input type="submit" class="btn btn-info" value="Añadir"></td>         							
-          	</tr>
+
 		</table>
           </form>
           </div>
@@ -117,6 +106,4 @@
   <script src="https://augustobrigadaw.000webhostapp.com/resources2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>
-

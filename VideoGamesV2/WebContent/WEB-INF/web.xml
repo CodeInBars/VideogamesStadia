@@ -31,6 +31,18 @@
         <servlet-name>aniadirS</servlet-name>
         <servlet-class>com.codelupo.controller.AniadirS</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>editarS</servlet-name>
+        <servlet-class>com.codelupo.controller.EditarS</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>editarFS</servlet-name>
+        <servlet-class>com.codelupo.controller.EditarFS</servlet-class>
+    </servlet>
+    
+    
 
   <!-- ================ Servlet Mappings ========================= -->
 
@@ -57,6 +69,16 @@
     <servlet-mapping>
         <servlet-name>aniadirS</servlet-name>
         <url-pattern>/aniadirS</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>editarS</servlet-name>
+        <url-pattern>/editarS</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>editarFS</servlet-name>
+        <url-pattern>/editarFS</url-pattern>
     </servlet-mapping>
 
 </web-app>

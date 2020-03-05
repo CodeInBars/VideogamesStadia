@@ -66,34 +66,41 @@
       
 
         <div class="row">
-        <form action="../VideoGamesV2/AniadirS" method="POST">
+        <form action="../VideoGamesV2/AniadirP" method="POST">
         
         <table>
         	<tr>
           		<td>DNI &nbsp</td>
-          		<td>NOMBRE &nbsp</td>
-          		<td>APELLIDOS &nbsp</td>
-          		<td>CUENTA &nbsp</td>         							
+          		<td>CODIGO &nbsp</td>
+          		<td>FECHA PRESTAMO &nbsp</td>
+          		<td>FECHA DEVOLUCION &nbsp</td>         							
           	</tr>
-		<c:forEach items="${socios}" var="v" varStatus="status">
+		<c:forEach items="${prestamos}" var="v" varStatus="status">
 
 	      	<tr>
 	        	<td>${v.dni}&nbsp</td>
-	          	<td>${v.name}&nbsp</td>
-	          	<td>${v.surname}&nbsp</td>
-	          	<td>${v.cuenta}&nbsp</td>
-	          	<td><a href = "<c:url value = "../VideoGamesV2/EditarS?dni=${v.dni}"/>" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>Prestar</a>&nbsp</td>
-				<td><a href = "<c:url value = "../VideoGamesV2/eliminarS?dni=${v.dni}"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Danger</a></td>	
+	          	<td>${v.codigo}&nbsp</td>
+	          	<td>${v.fechaPrestamo}&nbsp</td>
+	          	<td>${v.fDevolucion}&nbsp</td>    
+				<td><a href = "<c:url value = "../VideoGamesV2/devolver?id=${v.codigo}&dni=${v.dni}"/>" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i>Devolver</a></td>	
 					
 	      	</tr>
 
         </c:forEach>
         
         	<tr>
-          		<td><input type="text" name="dni" /></td>
-          		<td><input type="text" name="name" /></td>
-          		<td><input type="text" name="surname" /></td>
-          		<td><input type="text" name="account" /></td>
+          		<td><select name="dni">
+          				<c:forEach items="${socios}" var="v" varStatus="status">
+  							<option value="${v.dni}">${v.dni}</option>
+  						</c:forEach>
+				</select></td>
+          		<td><select name="id">
+          				<c:forEach items="${juegos}" var="v" varStatus="status">
+  							<option value="${v.code}">${v.name}</option>
+  						</c:forEach>
+				</select></td>
+          		<td><input type="date" name="fechaprestamo" /></td>
+          		
           		<td><input type="submit" class="btn btn-info" value="Añadir"></td>         							
           	</tr>
 		</table>
@@ -119,4 +126,3 @@
 </body>
 
 </html>
-
